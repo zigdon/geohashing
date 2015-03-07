@@ -1,0 +1,72 @@
+<?php
+$wgExtensionFunctions[] = 'efMapSetup';
+ 
+function efMapSetup() {
+  global $wgParser;
+  $wgParser->setHook( 'map', 'efMapFrameRender' );
+  $wgParser->setHook( 'mapimg', 'efMapImageRender' );
+}
+  
+function efMapImageRender( $input, $args, $parser ) {
+  $parser->disableCache();
+
+  if ($args['width'] == null) {
+    $args['width']=300;
+  }
+
+  if ($args['height'] == null) {
+    $args['height']=400;
+  }
+
+  if ($args['zoom'] == null) {
+    $args['zoom']=8;
+  }
+
+  if ($args['lat'] == null) {
+    return htmlspecialchars("** required attribute 'lat' is missing **");
+  }
+
+  if ($args['lon'] == null) {
+    return htmlspecialchars("** required attribute 'lon' is missing **");
+  }
+
+  return "<img width=\"". $args['width'] . "\" height=\"". $args['height'] ."\" ".
+         "src=\"http://carabiner.peeron.com/cgi-bin/static.cgi?" .
+         "&lat="    . $args['lat']   .  "&lon="  . $args['lon'] .
+         "&zoom="   . $args['zoom']  .  "&width=" . $args['width'] .
+         ($args['date'] != null ? "&date=" . $args['date'] : "") . 
+         "&height=" . $args['height'] .  "\" />" ;
+}
+
+function efMapFrameRender( $input, $args, $parser ) {
+  $parser->disableCache();
+
+  if ($args['width'] == null) {
+    $args['width']=300;
+  }
+
+  if ($args['height'] == null) {
+    $args['height']=400;
+  }
+
+  if ($args['zoom'] == null) {
+    $args['zoom']=8;
+  }
+
+  if ($args['lat'] == null) {
+    return htmlspecialchars("** required attribute 'lat' is missing **");
+  }
+
+  if ($args['lon'] == null) {
+    return htmlspecialchars("** required attribute 'lon' is missing **");
+  }
+
+  return "<iframe width=\"". ($args['width']+20) . "\" height=\"". ($args['height']+20) ."\" ".
+         "src=\"http://carabiner.peeron.com/xkcd/map/map.html?" .
+         "&lat="    . $args['lat']   .  "&long="  . $args['lon'] .
+         "&zoom="   . $args['zoom']  .  "&width=" . $args['width'] .
+         ($args['date'] != null ? "&date=" . $args['date'] : "") . 
+         ($args['abs']  != null ? "&abs="  . $args['abs']  : "") . 
+         "&height=" . $args['height'] .  "&embed=1\"></iframe>" ;
+}
+?>
