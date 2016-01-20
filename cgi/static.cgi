@@ -19,7 +19,7 @@ my $URL  = 'http://maps.google.com/maps/api/staticmap?size=%dx%d&markers=%.6f,%.
 my $URL2 = 'http://maps.google.com/maps/api/staticmap?size=%dx%d&center=%.6f,%.6f';
 
 foreach ($URL, $URL2) {
-  $_ .= '&key=%s&zoom=%s&path=color|weight:2|%d,%d|%d,%d|%d,%d|%d,%d|%d,%d';
+  $_ .= '&key=%s&zoom=%s&path=color:0xff000080|weight:2|%d,%d|%d,%d|%d,%d|%d,%d|%d,%d';
 }
 
 my %keys = (
